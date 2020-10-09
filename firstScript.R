@@ -22,8 +22,6 @@ output <- data.frame("hi","bye")
 names(output)<-c("Source","Target")
 output
 
-
-
 i <- 1
 while (i<nrow(pubmed)) {
   #get Authors splited 
@@ -40,7 +38,7 @@ while (i<nrow(pubmed)) {
     names(relationAuthor)<-c("Source","Target")
     output <- rbind(output, relationAuthor)
   }
-  else if(length(res) > 2){
+  if(length(res) > 2){
     while ((j+1)<length(res)){
       k<-j+1
       while(k<=length(res)){
@@ -55,6 +53,7 @@ while (i<nrow(pubmed)) {
   
   
   i <- i + 1
+  #output
 } 
 
 
