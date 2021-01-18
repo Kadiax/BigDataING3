@@ -1,0 +1,57 @@
+
+```{r creation_graphe, echo=FALSE}
+
+## Nombre d'auteurs et de relations uniques
+
+## Tout d'abord nous avons créer une fonction afin créer des relations sous forme de Source et Target.
+
+relations <- function(authors_by_year) {
+
+  #create a data frame for output
+  output <- data.frame("hi","bye")
+  names(output)<-c("Source","Target")
+  
+  
+  i <- 1
+  while (i<nrow(authors_by_year) && nrow(output) < 10000) {
+    #get Authors splited 
+    row <- authors_by_year[i, ]
+  
+    res<-unlist(strsplit(toString(authors$Authors), split=","))
+    
+    #adding relations 
+    j <- 1
+    if(length(res) == 2){
+      #create a dataFrame
+      relationAuthor<-data.frame(res[j][1],res[j+1][1])
+      names(relationAuthor)<-c("Source","Target")
+      output <- rbind(output, relationAuthor)
+    }
+    if(length(res) > 2){
+      while ((j+1)<length(res)){
+        k<-j+1
+        while(k<=length(res)){
+          relationAuthor<-data.frame(res[j][1],res[k][1])
+          names(relationAuthor)<-c("Source","Target")
+          output <- rbind(output, relationAuthor)
+          k<-k+1
+        }
+        j<- j + 1
+      }
+    }
+    
+    i <- i + 1
+  } 
+  return (output)
+}
+
+
+```
+
+Ensuite nous avons sauvegarder les relations dans des fichiers par années.
+
+```{r relations, echo=FALSE}
+
+authors2015Relations = relations(authors2015)
+write.csv (authors2015Relations, file = "export/relations/authors2015.csv", row.names=FALSE)
+```

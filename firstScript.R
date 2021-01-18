@@ -23,7 +23,7 @@ names(output)<-c("Source","Target")
 output
 
 i <- 1
-while (i<nrow(pubmed)) {
+while (i<nrow(pubmed) && nrow(output) < 10000) {
   #get Authors splited 
   row <- pubmed[i, ]
   authors<- row["Authors"]
@@ -51,6 +51,7 @@ while (i<nrow(pubmed)) {
     }
   }
   
+ 
   
   i <- i + 1
   #output
